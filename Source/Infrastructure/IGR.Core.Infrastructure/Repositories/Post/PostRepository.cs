@@ -22,7 +22,7 @@ namespace IGR.Core.Infrastructure.Repositories.Post
 
         public Task<IEnumerable<PostWithLatestCommentDto>> GetWithCommentsAsync(int startIndex, int length)
         {
-            return SearchAsync(delegate(DbSet<IGR.Core.Domain.AggregateRoots.Post.Post> dbSet)
+            return Task.FromResult(Search(delegate(DbSet<IGR.Core.Domain.AggregateRoots.Post.Post> dbSet)
             {
                 return dbSet.Skip(startIndex).Take(length)
                     .Include(item => item.Account)
@@ -35,7 +35,7 @@ namespace IGR.Core.Infrastructure.Repositories.Post
                         Post = item,
                         Comments = item.Comments.OrderByDescending(comm => comm.CreatedDateTime).Take(2)
                     });
-            });
+            }));
         }
 
         public async Task DeletePostAsync(int accountId)

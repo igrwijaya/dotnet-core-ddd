@@ -235,7 +235,7 @@ namespace IGR.Core.Infrastructure.Repositories
                 : await entities.Where(predicate).Take(limit).ToListAsync();
         }
         
-        protected async Task<IEnumerable<TResult>> SearchAsync<TResult>(Func<DbSet<TEntity>, IEnumerable<TResult>> extendedQuery)
+        protected IEnumerable<TResult> Search<TResult>(Func<DbSet<TEntity>, IEnumerable<TResult>> extendedQuery)
         {
             var dbSet = Context.Set<TEntity>();
 
